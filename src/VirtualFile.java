@@ -1,4 +1,8 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -8,20 +12,26 @@ import java.util.Scanner;
 public class VirtualFile {
 
     // see on alguses nimede printimiseks 'nimed.txt' failist
-    public static List<String[]> testiNimed() throws Exception {
+    public static ObservableList<String> testiNimed()  {
 
-        File fail = new File("nimed.txt");
-        Scanner sc = new Scanner(fail);
-        List<String[]> testideNimed = new ArrayList<>();
-
-        int i  = 0;
-        while(sc.hasNextLine()) {
-            i++;
-            String[] test = sc.nextLine().trim().split(":");
-            testideNimed.add(test);
+        File fail = new File("resources" + File.separatorChar + "testid" + File.separatorChar + "nimed.txt");
+        List<String> testideNimed = new ArrayList();
+        try (Scanner sc = new Scanner(fail)){
+            int i  = 0;
+            while(sc.hasNextLine()) {
+                i++;
+                String test = sc.nextLine().trim();
+                testideNimed.add(test);
+            }
         }
-        sc.close();
-        return testideNimed;
+        catch (FileNotFoundException e) {
+            return null;
+        }
+        ObservableList<String> observableList = FXCollections.observableList(testideNimed);
+        for (String s : testideNimed) {
+            System.out.println(s);
+        }
+        return observableList;
 
     }
 
