@@ -28,9 +28,6 @@ public class VirtualFile {
             return null;
         }
         ObservableList<String> observableList = FXCollections.observableList(testideNimed);
-        for (String s : testideNimed) {
-            System.out.println(s);
-        }
         return observableList;
 
     }

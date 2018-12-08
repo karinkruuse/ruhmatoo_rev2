@@ -1,5 +1,8 @@
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Priority;
@@ -12,6 +15,7 @@ public class ValiTest extends PopUp {
     private static Scanner s = new Scanner(System.in);
     private static Utilities u = new Utilities();
 
+    private String test;
     private int pikkus;
     private List<Integer> vastused = new ArrayList<>();
     private VirtualFile testiFail;
@@ -23,15 +27,34 @@ public class ValiTest extends PopUp {
         Scene testid = new Scene(testiLayout);
         ObservableList<String> testideNimed = VirtualFile.testiNimed();
         ListView listiVaade = new ListView(testideNimed);
-        testiLayout.getChildren().addAll(new Label("Olemas olevad testid:"), listiVaade);
+        Button kinnita = new Button("Vali");
+        testiLayout.getChildren().addAll(new Label("Olemas olevad testid:"), listiVaade, kinnita);
         listiVaade.setPrefHeight(26*testideNimed.size());
+
 
         uusAken.setScene(testid);
         uusAken.show();
 
-//        testiFail = new VirtualFile();
-        //pikkus = testiFail.getPikkus();
 
+        while (valik != true) {
+            kinnita.setOnAction(e -> {
+                setTest(listiVaade.getSelectionModel().getSelectedItem().toString());
+                PopUp valimine = new PopUp("Kindel?");
+                valimine.confirmation("valida testi: '" + test + "'");
+            });
+            break;
+        }
+
+        System.out.println(test);
+
+
+        testiFail = new VirtualFile(test+".txt");
+        pikkus = testiFail.getPikkus();
+
+    }
+
+    private void setTest(String nimi) {
+        test = nimi.replace("?", "");
     }
 
 
