@@ -1,7 +1,7 @@
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public abstract class PopUp {
+public class PopUp {
 
     protected Stage uusAken;
 

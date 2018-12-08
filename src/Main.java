@@ -26,5 +26,8 @@ public class Main extends Application {
 
         aken.setScene(peaStseen);
         aken.show();
+
+        valiTest.setOnAction(event -> new ValiTest("Psühhoanalüüs"));
+
     }
 }
