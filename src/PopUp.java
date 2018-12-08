@@ -10,6 +10,8 @@ public class PopUp {
         uusAken.initModality(Modality.APPLICATION_MODAL);
         uusAken.setTitle(ribaNimi);
         uusAken.resizableProperty();
+
+        uusAken.show();
     }
 
 
