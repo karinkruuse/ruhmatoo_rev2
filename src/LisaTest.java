@@ -96,21 +96,22 @@ public class LisaTest extends PopUp{
         System.out.println("olen esimeses meetodis");
         grid.add(testiSilt, 0, 0);
         grid.add(testinimitxt, 1, 0);
-        grid.add(new Label("Jätkamiseks vajuta ENTER"), 0, 1, 3, 1);
+        grid.add(new Label("Testi nime salvestamiseks vajuta ENTER"), 0, 1, 3, 1);
         uusAken.setScene(algus);
         uusAken.show();
 
+        Button lisaKüsimus = new Button("Lisa küsimus");
 
         algus.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent ke) {
                 if (ke.getCode() == KeyCode.ENTER && testinimitxt.getText().length() > 0) {
-                    System.out.println("ei sina");
                     String testinimi = testinimitxt.getText();
-                    LisaKüsimus();
+                    grid.add(lisaKüsimus, 0, 3);
                 }
             }
         });
+        lisaKüsimus.setOnAction(event -> LisaKüsimus());
 
         }
 
