@@ -23,7 +23,7 @@ public class Main extends Application {
         HBox layout = new HBox(10, valiTest, lisaTest);
         layout.setAlignment(Pos.CENTER);
 
-        Scene peaStseen = new Scene(layout, 500, 500);
+        Scene peaStseen = new Scene(layout, 800, 800);
 
 
         BackgroundImage bgi = new BackgroundImage(new Image("pildid" + File.separatorChar + "taust.jpeg"),

@@ -40,11 +40,13 @@ public class ValiTest extends PopUp {
             PopUp kindel = new PopUp("");
             kindel.confirmation("Kas soovite proovida testi: '" +
                     listiVaade.getSelectionModel().getSelectedItem().toString() + "'?");
-            try {
-                mängi(listiVaade.getSelectionModel().getSelectedItem());
-            }
-            catch (FileNotFoundException f) {
-                listiVaade.getItems().remove(listiVaade.getSelectionModel().getSelectedItem());
+            if (kindel.valik == true) {
+                try {
+                    mängi(listiVaade.getSelectionModel().getSelectedItem());
+                }
+                catch (FileNotFoundException f) {
+                    listiVaade.getItems().remove(listiVaade.getSelectionModel().getSelectedItem());
+                }
             }
         });
     }
