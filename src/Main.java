@@ -23,14 +23,15 @@ public class Main extends Application {
         HBox layout = new HBox(10, valiTest, lisaTest);
         layout.setAlignment(Pos.CENTER);
 
-        Scene peaStseen = new Scene(layout, 800, 800);
-
-
         BackgroundImage bgi = new BackgroundImage(new Image("pildid" + File.separatorChar + "taust.jpeg"),
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
+
+        Scene peaStseen = new Scene(layout, 640, 426);
+
+
 
         layout.setBackground(new Background(bgi));
 

@@ -1,11 +1,14 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,17 +24,32 @@ public class ValiTest extends PopUp {
     private List<Integer> vastused = new ArrayList<>();
     private VirtualFile testiFail;
 
+    BackgroundImage bgi;
+    private int laius;
+    private int kõrgus;
+
     public ValiTest(String ribaNimi) {
         super(ribaNimi);
 
+        bgi = new BackgroundImage(new Image("pildid" + File.separatorChar + "naine.jpeg"),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+        laius = 640;
+        kõrgus = 426;
+
         VBox testiLayout = new VBox();
-        Scene testid = new Scene(testiLayout);
+        Scene testid = new Scene(testiLayout,laius, kõrgus);
         ObservableList<String> testideNimed = VirtualFile.testiNimed();
         ListView listiVaade = new ListView(testideNimed);
         Button kinnita = new Button("Vali");
-        testiLayout.getChildren().addAll(new Label("Olemas olevad testid:"), listiVaade, kinnita);
+        Label tekst = new Label("Olemas olevad testid:");
+        tekst.setTextFill(Color.WHITE);
+        testiLayout.getChildren().addAll(tekst, listiVaade, kinnita);
         listiVaade.setPrefHeight(26*testideNimed.size());
 
+        testiLayout.setBackground(new Background(bgi));
 
         uusAken.setScene(testid);
         uusAken.show();
@@ -40,6 +58,7 @@ public class ValiTest extends PopUp {
             PopUp kindel = new PopUp("");
             kindel.confirmation("Kas soovite proovida testi: '" +
                     listiVaade.getSelectionModel().getSelectedItem().toString() + "'?");
+
             if (kindel.valik == true) {
                 try {
                     mängi(listiVaade.getSelectionModel().getSelectedItem());
@@ -51,6 +70,7 @@ public class ValiTest extends PopUp {
         });
     }
 
+
     private void mängi(Object test) throws FileNotFoundException {
 
         testiFail = new VirtualFile(test.toString() + ".txt");
@@ -59,6 +79,7 @@ public class ValiTest extends PopUp {
         küsi(1);
 
     }
+
 
     public void küsi(int küsimuseNr) {
         // Küsimuse ja vastusevariantide väljastamine
@@ -71,13 +92,16 @@ public class ValiTest extends PopUp {
         List<String> segatudList = new ArrayList<>(Arrays.asList(segatud));
 
         VBox testiLayout = new VBox();
-        Scene küsimuseStseen = new Scene(testiLayout);
+        Scene küsimuseStseen = new Scene(testiLayout, laius, kõrgus);
         ObservableList<String> vastused = FXCollections.observableList(segatudList);
         ListView listiVaade = new ListView(vastused);
         Button kinnita = new Button("Vasta");
-        testiLayout.getChildren().addAll(new Label(küsimus[0]), listiVaade, kinnita);
+        Label küsimuseTekst = new Label(küsimus[0]);
+        küsimuseTekst.setTextFill(Color.WHITE);
+        testiLayout.getChildren().addAll(küsimuseTekst, listiVaade, kinnita);
         listiVaade.setPrefHeight(26*vastused.size());
 
+        testiLayout.setBackground(new Background(bgi));
         uusAken.setScene(küsimuseStseen);
 
         // See on naq rekursiivne küsimuste küsimine ja kui enam pole küsimust, mida küsida, siis genereeritakse tulemus, mis hetkel kuvatakse terminalis
@@ -87,12 +111,32 @@ public class ValiTest extends PopUp {
                 küsi(küsimuseNr+1);
             }
             catch (IndexOutOfBoundsException e2) {
-                System.out.println(genereeriTulemus());
-                uusAken.close();
+                tulemus(genereeriTulemus());
             }
         });
 
     }
+
+
+    public void tulemus(String t) {
+        VBox vbox = new VBox();
+        bgi = new BackgroundImage(new Image("pildid" + File.separatorChar + "grupp.jpeg"),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+
+        Scene tulemuseStseen = new Scene(vbox, laius, kõrgus);
+        Label tt = new Label(t);
+        tt.setScaleX(5);
+        tt.setScaleY(5);
+        tt.setTextFill(Color.WHITE);
+        vbox.setBackground(new Background(bgi));
+        vbox.getChildren().addAll(tt);
+        vbox.setAlignment(Pos.CENTER);
+        uusAken.setScene(tulemuseStseen);
+    }
+
 
     public void setVastus(int küsimuseNr, String[] segamata, List segatud, Object valitudVastus) {
         int vastus = segatud.indexOf(valitudVastus.toString());
@@ -112,7 +156,7 @@ public class ValiTest extends PopUp {
 
         for (int i = 0; i < testiFail.getTulemusteArv(); i++) {
             if (summa >= testiFail.getVahemikAlampiir(i) && summa <= testiFail.getVahemikÜlempiir(i)) {
-                return "Tulemus: " + testiFail.getTulemus(i);
+                return testiFail.getTulemus(i);
             }
         }
         return "";
