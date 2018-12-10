@@ -6,10 +6,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-
-import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
-import java.security.Key;
 import java.util.ArrayList;
 
 public class LisaTest extends PopUp{
@@ -19,7 +15,6 @@ public class LisaTest extends PopUp{
         esimene();
     }
 
-    //ma ei tea kas see t;;tab aga vist t;;tab
     private int küsimusteArv = 0;
     public int getKüsimusteArv() {
         return küsimusteArv;
@@ -28,10 +23,13 @@ public class LisaTest extends PopUp{
         this.küsimusteArv = küsimusteArv;
     }
 
-    // kusimuste lisamise lopetamiseks
-    private static boolean kloop = true;
-    public static void setKloop(boolean kloop) {
-        LisaTest.kloop = kloop;
+    //ma ei tea kas see t;;tab aga vist t;;tab
+    private int vastusteArv = 0;
+    public int getVastusteArv() {
+        return vastusteArv;
+    }
+    public void setVastusteArv(int vastusteArv) {
+        this.vastusteArv = vastusteArv;
     }
 
     //kogu testiinfo, mille korraga faili saab salvestada
@@ -49,68 +47,74 @@ public class LisaTest extends PopUp{
     }
 
     public void LisaKüsimus() {
-        while (kloop) {
-
-            setKüsimusteArv(0);
+            setVastusteArv(0); //uue lisamisel vastuste arv 0
 
             GridPane grid = new GridPane();
-            String[] koguKüsimus;
-            Label küsimus = new Label("Sisesta küsimus");
+            String[] koguKüsimus = new String[30];
+            Label küsimus = new Label("Sisesta küsimus nr " + getKüsimusteArv() + "  ");
             TextField küsimustxt = new TextField();
             Button lõpp = new Button("Lõpeta küsimuste lisamine");
-            lõpp.setOnAction(event -> setKloop(false));
-            grid.add(küsimus, 0,0);
-            grid.add(küsimustxt, 1,0);
+            grid.add(küsimus, 0, 0);
+            grid.add(küsimustxt, 1, 0);
             grid.add(lõpp, 3, 0);
-            grid.add(new Label("Uue vastusevariandi sisestamiseks vajuta ENTER"), 0, 1, 3, 4);
+            grid.add(new Label("Vastusevariandi salvestamiseks vajuta ENTER"), 0, 1, 3, 4);
+
 
             Scene küsmuseLisamine = new Scene(grid);
             uusAken.setScene(küsmuseLisamine);
-
+            koguKüsimus[0] = küsimustxt.getText();
             küsmuseLisamine.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent ke) {
-                    if (ke.getCode() == KeyCode.ENTER) {
+                    if (ke.getCode() == KeyCode.ENTER && küsimustxt.getText().length() > 0) {
 
-                        grid.add(new Label("Lisa variant"), 0, getKüsimusteArv()+2);
-                        grid.add(new TextField(), 1, getKüsimusteArv()+2);
-                        grid.add(new Label("Antud vastuse eest saab "+ getKüsimusteArv() + " punkti."), 2, getKüsimusteArv()+2);
-                        setKüsimusteArv(getKüsimusteArv()+1);
+                        System.out.println("evenhandleri sees");
+                        String knimi = küsimustxt.getText();
+                        grid.add(new Label("Lisa variant  "), 0, (getVastusteArv() + 2));
+                        grid.add(new TextField(), 1, getVastusteArv() + 2);
+                        grid.add(new Label("Antud vastuse eest saab " + (getVastusteArv()+1) + " punkti."), 2, (getVastusteArv() + 2));
+                        setVastusteArv(getVastusteArv() + 1);
                     }
                 }
             });
-            String knimi = küsimustxt.getText();
-            //koguKüsimus[0] = knimi;
-        }
 
-        //uusAken.setScene(aaaaaaaaaaaaaaaaaaaaaaaaaaa)
-    }
+            setKüsimusteArv(getKüsimusteArv()+1);
+
+
+            //koguKüsimus[0] = knimi;
+
+
+            //uusAken.setScene(aaaaaaaaaaaaaaaaaaaaaaaaaaa)
+        }
 
 
     public void esimene() {
         GridPane grid = new GridPane();
-        Label testiSilt = new Label("Sisesta testi nimi:");
+        Label testiSilt = new Label("Sisesta testi nimi:  ");
         TextField testinimitxt = new TextField();
-        String testinimi = testiSilt.getText();
         Scene algus = new Scene(grid);
-        uusAken.show();
-
+        System.out.println("olen esimeses meetodis");
         grid.add(testiSilt, 0, 0);
-        grid.add(testinimitxt, 0, 1);
+        grid.add(testinimitxt, 1, 0);
         grid.add(new Label("Jätkamiseks vajuta ENTER"), 0, 1, 3, 1);
-
+        uusAken.setScene(algus);
+        uusAken.show();
 
 
         algus.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent ke) {
-                if (ke.getCode() == KeyCode.ENTER) {
+                if (ke.getCode() == KeyCode.ENTER && testinimitxt.getText().length() > 0) {
+                    System.out.println("ei sina");
+                    String testinimi = testinimitxt.getText();
                     LisaKüsimus();
                 }
             }
         });
 
-    }
+        }
+
+
 }
 
 
