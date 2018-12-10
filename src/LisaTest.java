@@ -6,10 +6,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-
-import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
-import java.security.Key;
 import java.util.ArrayList;
 
 public class LisaTest extends PopUp{
@@ -61,16 +57,17 @@ public class LisaTest extends PopUp{
             grid.add(küsimus, 0, 0);
             grid.add(küsimustxt, 1, 0);
             grid.add(lõpp, 3, 0);
-            grid.add(new Label("Uue vastusevariandi sisestamiseks vajuta ENTER"), 0, 1, 3, 4);
+            grid.add(new Label("Vastusevariandi salvestamiseks vajuta ENTER"), 0, 1, 3, 4);
 
 
             Scene küsmuseLisamine = new Scene(grid);
             uusAken.setScene(küsmuseLisamine);
-
+            koguKüsimus[0] = küsimustxt.getText();
             küsmuseLisamine.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent ke) {
                     if (ke.getCode() == KeyCode.ENTER && küsimustxt.getText().length() > 0) {
+
                         System.out.println("evenhandleri sees");
                         String knimi = küsimustxt.getText();
                         grid.add(new Label("Lisa variant  "), 0, (getVastusteArv() + 2));
@@ -82,6 +79,8 @@ public class LisaTest extends PopUp{
             });
 
             setKüsimusteArv(getKüsimusteArv()+1);
+
+
             //koguKüsimus[0] = knimi;
 
 
@@ -99,7 +98,9 @@ public class LisaTest extends PopUp{
         grid.add(testinimitxt, 1, 0);
         grid.add(new Label("Jätkamiseks vajuta ENTER"), 0, 1, 3, 1);
         uusAken.setScene(algus);
-        uusAken.show();{
+        uusAken.show();
+
+
         algus.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent ke) {
@@ -111,7 +112,6 @@ public class LisaTest extends PopUp{
             }
         });
 
-        }
         }
 
 
