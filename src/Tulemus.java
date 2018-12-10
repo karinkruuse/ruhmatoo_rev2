@@ -15,6 +15,7 @@ public class Tulemus  {
     private int küsimusteArv;
     private int maxTulemus;
     private ArrayList<String> küsimused;
+    private ArrayList<String> tulemused;
 
     public Tulemus(Stage aken, ArrayList<String> küsimused) {
         this.aken = aken;
@@ -25,6 +26,7 @@ public class Tulemus  {
         }
         maxTulemus = summa;
         this.küsimused = küsimused;
+        tulemused = new ArrayList<>();
 
         tulemusteAlgus();
     }
@@ -43,7 +45,9 @@ public class Tulemus  {
     }
 
     public void tulemuseSisestamine() {
+        VBox välimine = new VBox();
         HBox layout = new HBox();
+        välimine.getChildren().add(layout);
         layout.setAlignment(Pos.BASELINE_RIGHT);
         TextField tulemuseKoht = new TextField("Siia sisesta tulemus");
         TextField minTulemus = new TextField("Tulemuse alampiir");
@@ -52,8 +56,18 @@ public class Tulemus  {
         Button järgmineTulemus = new Button("järgmine");
         Button valmis = new Button("Valmis");
 
+        layout.getChildren().addAll(tulemuseKoht, minTulemus, maxTulemus, järgmineTulemus, valmis);
+        Scene tulemuseLisamiseStseen = new Scene(välimine);
+        aken.setScene(tulemuseLisamiseStseen);
+
         järgmineTulemus.setOnAction(e -> {
-            if
+            if (tulemuseKoht.getText().length() > 0 && minTulemus.getText().length() > 0 && maxTulemus.getText().length() > 0) {
+                String rida = tulemuseKoht.getText() + ";" + minTulemus.getText() + ";" +  maxTulemus.getText() + "\n";
+            }
+            else {
+                Label hoiatus = new Label("Palun täitke kõik väljad!");
+                välimine.getChildren().addAll(hoiatus);
+            }
         });
 
     }
