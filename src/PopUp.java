@@ -17,23 +17,21 @@ public class PopUp {
         uusAken.resizableProperty();
     }
 
-    public void confirmation() {
+    public void confirmation(String tekst) {
         Button jah = new Button("Jah");
         Button ei = new Button("Ei");
-        Label tekst = new Label("Kas olete kindel, et soovite mängu sulgeda?");
+        Label t = new Label(tekst);
 
-        VBox layout = new VBox(10, tekst, ei, jah);
+        VBox layout = new VBox(10, t, ei, jah);
         layout.setAlignment(Pos.CENTER);
 
         Scene pisikeStseen = new Scene(layout);
-
         uusAken.setScene(pisikeStseen);
-        uusAken.show();
-
-        // Kui saaks siin oodata enne, kui selle kutsunud meetod saa jätkata, ss imo see lahendaks palju probleeme
+        uusAken.showAndWait();
 
         jah.setOnAction(event -> {
             uusAken.close();
+            return;
         });
         ei.setOnAction(event -> {
             uusAken.close();

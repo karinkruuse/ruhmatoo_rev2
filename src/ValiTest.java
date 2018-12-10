@@ -22,7 +22,6 @@ public class ValiTest extends PopUp {
     private VirtualFile testiFail;
 
     public ValiTest(String ribaNimi) {
-
         super(ribaNimi);
 
         VBox testiLayout = new VBox();
@@ -38,6 +37,9 @@ public class ValiTest extends PopUp {
         uusAken.show();
 
         kinnita.setOnAction(e -> {
+            PopUp kindel = new PopUp("");
+            kindel.confirmation("Kas soovite proovida testi: '" +
+                    listiVaade.getSelectionModel().getSelectedItem().toString() + "'?");
             try {
                 mängi(listiVaade.getSelectionModel().getSelectedItem());
             }
@@ -51,7 +53,6 @@ public class ValiTest extends PopUp {
 
         testiFail = new VirtualFile(test.toString() + ".txt");
         pikkus = testiFail.getPikkus();
-
 
         küsi(1);
 
@@ -76,7 +77,6 @@ public class ValiTest extends PopUp {
         listiVaade.setPrefHeight(26*vastused.size());
 
         uusAken.setScene(küsimuseStseen);
-
 
         // See on naq rekursiivne küsimuste küsimine ja kui enam pole küsimust, mida küsida, siis genereeritakse tulemus, mis hetkel kuvatakse terminalis
         kinnita.setOnAction(e -> {
@@ -113,7 +113,6 @@ public class ValiTest extends PopUp {
                 return "Tulemus: " + testiFail.getTulemus(i);
             }
         }
-
         return "";
 
     }
