@@ -3,10 +3,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Tulemus  {
@@ -38,6 +39,7 @@ public class Tulemus  {
         vbox.getChildren().addAll(küsimus);
         vbox.setAlignment(Pos.TOP_CENTER);
         Button alusta = new Button("tulemusi sisestama");
+        vbox.getChildren().add(alusta);
         aken.setScene(tulemuseStseen);
 
         alusta.setOnAction(e -> tulemuseSisestamine());
@@ -45,9 +47,17 @@ public class Tulemus  {
     }
 
     public void tulemuseSisestamine() {
+
+        BackgroundImage bgi = new BackgroundImage(new Image("pildid" + File.separatorChar + "kirju.jpeg"),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+
         VBox välimine = new VBox();
+        välimine.setBackground(new Background(bgi));
         HBox layout = new HBox();
-        layout.setAlignment(Pos.BASELINE_RIGHT);
+        layout.setAlignment(Pos.CENTER);
         Label palve = new Label("Palun alustage tulemusest, milleks on vaja kõige vähem punkte.");
         välimine.getChildren().addAll(palve, layout);
 
@@ -59,13 +69,13 @@ public class Tulemus  {
         Button valmis = new Button("Valmis");
 
         layout.getChildren().addAll(tulemuseKoht, minTulemuseKoht, maxTulemuseKoht, järgmineTulemus, valmis);
-        Scene tulemuseLisamiseStseen = new Scene(välimine);
+        Scene tulemuseLisamiseStseen = new Scene(välimine, 640, 426);
         aken.setScene(tulemuseLisamiseStseen);
 
         aken.setOnCloseRequest(e -> {
             e.consume();
             PopUp p = new PopUp("Kindel?");
-            p.confirmation("Olete kindel, et soovite mängust lahkuda?");
+            p.confirmation("Olete kindel, et soovite mängust lahkuda ilma salvestamata?");
             if (p.valik == true) {
                 aken.close();
             }
@@ -111,11 +121,22 @@ public class Tulemus  {
     }
 
     public void lõpp() {
+
+        BackgroundImage bgi = new BackgroundImage(new Image("pildid" + File.separatorChar + "kirju.jpeg"),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+
         SalvestaFaili salvesta = new SalvestaFaili(küsimused, tulemused);
         HBox layout = new HBox();
-        Scene lõppuStseen = new Scene(layout);
+        layout.setBackground(new Background(bgi));
+        Scene lõppuStseen = new Scene(layout, 640, 426);
         Label label = new Label("Salvestan testi!");
         Button sulge = new Button("Menüü");
+        layout.getChildren().addAll(label, sulge);
+
+        aken.setScene(lõppuStseen);
 
         sulge.setOnAction(e -> aken.close());
     }
