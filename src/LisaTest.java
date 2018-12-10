@@ -96,11 +96,13 @@ public class LisaTest extends PopUp{
         System.out.println("olen esimeses meetodis");
         grid.add(testiSilt, 0, 0);
         grid.add(testinimitxt, 1, 0);
-        grid.add(new Label("Testi nime salvestamiseks vajuta ENTER"), 0, 1, 3, 1);
+        Label nimeSalvestamine = new Label("Testi nime salvestamiseks vajuta ENTER");
+        grid.add(nimeSalvestamine, 0, 1, 3, 1);
         uusAken.setScene(algus);
         uusAken.show();
 
         Button lisaKüsimus = new Button("Lisa küsimus");
+        Button lõpetaKüsimusteLisamine = new Button("Lõpeta küsimuste lisamine");
 
         algus.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
@@ -108,10 +110,16 @@ public class LisaTest extends PopUp{
                 if (ke.getCode() == KeyCode.ENTER && testinimitxt.getText().length() > 0) {
                     String testinimi = testinimitxt.getText();
                     grid.add(lisaKüsimus, 0, 3);
+                    grid.add(lõpetaKüsimusteLisamine, 1, 3);
+                    nimeSalvestamine.setText("Testi nimi salvestatud");
                 }
             }
         });
+
         lisaKüsimus.setOnAction(event -> LisaKüsimus());
+        //pooleli
+        //lõpetaKüsimusteLisamine.setOnAction(event -> );
+
 
         }
 
