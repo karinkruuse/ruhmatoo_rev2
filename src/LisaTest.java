@@ -1,3 +1,4 @@
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -32,11 +33,20 @@ public class LisaTest extends PopUp{
         this.vastusteArv = vastusteArv;
     }
 
+    private String küsimus;
+    private String vastus;
+    private String[] koguKüsimus;
+
+
     //kogu testiinfo, mille korraga faili saab salvestada
-    private ArrayList testiInfo; 
+    private ArrayList<String> testiInfo = new ArrayList();
     public ArrayList getTestiInfo() {
         return testiInfo;
     }
+    public void setTestiInfo(String info) {
+        this.testiInfo.add(info);
+    }
+
     public void setTestiInfo(ArrayList testiInfo) {
         this.testiInfo = testiInfo;
     }
@@ -112,11 +122,20 @@ public class LisaTest extends PopUp{
                     grid.add(lisaKüsimus, 0, 3);
                     grid.add(lõpetaKüsimusteLisamine, 1, 3);
                     nimeSalvestamine.setText("Testi nimi salvestatud");
+                    setTestiInfo(testinimi);
                 }
             }
         });
 
-        lisaKüsimus.setOnAction(event -> LisaKüsimus());
+        lisaKüsimus.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                LisaKüsimus();
+
+                //salvesta k[simus arraysse
+
+            }
+        });
         //pooleli
         //lõpetaKüsimusteLisamine.setOnAction(event -> );
 
@@ -125,6 +144,10 @@ public class LisaTest extends PopUp{
 
 
 }
+
+//testiInfo
+//0 kohal on testi nimi
+//1-.. on küsimus vastustega formaadis küs;vvariant1;variant2 jne
 
 
 
