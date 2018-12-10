@@ -17,6 +17,9 @@ public class PopUp {
         uusAken.resizableProperty();
     }
 
+    // Seda booleani tuleb kontrollida, et seda saada, mis user vastas
+    // töötava näide on ValiTest klassis konstruktoris
+    public boolean valik = false;
     public void confirmation(String tekst) {
         Button jah = new Button("Jah");
         Button ei = new Button("Ei");
@@ -27,16 +30,20 @@ public class PopUp {
 
         Scene pisikeStseen = new Scene(layout);
         uusAken.setScene(pisikeStseen);
-        uusAken.showAndWait();
 
         jah.setOnAction(event -> {
+            setValik();
             uusAken.close();
-            return;
         });
         ei.setOnAction(event -> {
             uusAken.close();
         });
+
+        uusAken.showAndWait();
     }
 
+    public void setValik() {
+        valik = true;
+    }
 
 }
