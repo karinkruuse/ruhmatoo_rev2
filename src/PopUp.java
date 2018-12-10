@@ -19,7 +19,7 @@ public class PopUp {
 
     // Seda booleani tuleb kontrollida, et seda saada, mis user vastas
     // töötava näide on ValiTest klassis konstruktoris
-    public static boolean valik = false;
+    public boolean valik = false;
     public void confirmation(String tekst) {
         Button jah = new Button("Jah");
         Button ei = new Button("Ei");
@@ -32,7 +32,7 @@ public class PopUp {
         uusAken.setScene(pisikeStseen);
 
         jah.setOnAction(event -> {
-            valik = true;
+            setValik();
             uusAken.close();
         });
         ei.setOnAction(event -> {
@@ -40,6 +40,10 @@ public class PopUp {
         });
 
         uusAken.showAndWait();
+    }
+
+    public void setValik() {
+        valik = true;
     }
 
 }

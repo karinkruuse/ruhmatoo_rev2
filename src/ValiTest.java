@@ -77,7 +77,6 @@ public class ValiTest extends PopUp {
         // Küsimuse ja vastusevariantide väljastamine
         String[] küsimus = testiFail.getKüsimus(küsimuseNr);
 
-
         // See on vastusevariantide segamiseks mõeldud osa
         List<String> list = new ArrayList<>(Arrays.asList(küsimus));  // küsimuste list
         list.remove(küsimus[0]);  // esimene on küsimus
@@ -98,7 +97,15 @@ public class ValiTest extends PopUp {
         testiLayout.setBackground(new Background(bgi));
         uusAken.setScene(küsimuseStseen);
 
-
+        uusAken.setOnCloseRequest(e -> {
+            e.consume();
+            PopUp p = new PopUp("Kindel?");
+            p.confirmation("Olete kindel, et soovite mängust lahkuda?");
+            if (p.valik == true) {
+                uusAken.close();
+                System.out.println("HAHA");
+            }
+        });
 
         // See on naq rekursiivne küsimuste küsimine ja kui enam pole küsimust, mida küsida, siis tuleb tulemus
         kinnita.setOnAction(e -> {
