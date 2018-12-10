@@ -24,6 +24,25 @@ public class LisaTest extends PopUp{
         this.küsimusteArv = küsimusteArv;
     }
 
+    public String getKüsimus() {
+        return küsimus;
+    }
+    public void setKüsimus(String küsimus) {
+        this.küsimus = küsimus;
+    }
+    public String getVastus() {
+        return vastus;
+    }
+    public void setVastus(String vastus) {
+        this.vastus = vastus;
+    }
+    public String[] getKoguKüsimus() {
+        return koguKüsimus;
+    }
+    public void setKoguKüsimus(String info, int indeks) {
+        this.koguKüsimus[indeks] = info;
+    }
+
     //ma ei tea kas see t;;tab aga vist t;;tab
     private int vastusteArv = 0;
     public int getVastusteArv() {
@@ -35,7 +54,7 @@ public class LisaTest extends PopUp{
 
     private String küsimus;
     private String vastus;
-    private String[] koguKüsimus;
+    String[] koguKüsimus = new String[31]; //eeldus, et rohkem kui 30 vastusevarianti ei tule, sest see poleks kuigi m6istlik
 
 
     //kogu testiinfo, mille korraga faili saab salvestada
@@ -51,51 +70,70 @@ public class LisaTest extends PopUp{
         this.testiInfo = testiInfo;
     }
 
-    public void LisaVariant() {
-        Label variant = new Label("Sisesta vastusevariant");
-        TextField varianttxtx = new TextField();
-    }
+
 
     public void LisaKüsimus() {
             setVastusteArv(0); //uue lisamisel vastuste arv 0
 
             GridPane grid = new GridPane();
-            String[] koguKüsimus = new String[30];
-            Label küsimus = new Label("Sisesta küsimus nr " + getKüsimusteArv() + "  ");
+            Label küsimuseSilt = new Label("Sisesta küsimus nr " + (getKüsimusteArv()+1) + "  ");
             TextField küsimustxt = new TextField();
-            Button lõpp = new Button("Lõpeta küsimuste lisamine");
-            grid.add(küsimus, 0, 0);
+            grid.add(küsimuseSilt, 0, 0);
             grid.add(küsimustxt, 1, 0);
-            grid.add(lõpp, 3, 0);
-            grid.add(new Label("Vastusevariandi salvestamiseks vajuta ENTER"), 0, 1, 3, 4);
-
-
+            Label küsimuseSalvestamine = new Label("Küsimuse salvestamiseks vajuta ENTER");
+            grid.add(küsimuseSalvestamine, 0, 1, 3, 4);
             Scene küsmuseLisamine = new Scene(grid);
             uusAken.setScene(küsmuseLisamine);
-            koguKüsimus[0] = küsimustxt.getText();
+
+            Button lisaVariant = new Button("Lisa vastusevariant");
+            Button lõpetaVastusteLisamine = new Button("Lõpeta variantide lisamine");
+
             küsmuseLisamine.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent ke) {
                     if (ke.getCode() == KeyCode.ENTER && küsimustxt.getText().length() > 0) {
+                        setKüsimus(küsimustxt.getText());
+                        grid.add(lisaVariant, 0, 2);
+                        grid.add(lõpetaVastusteLisamine, 1, 2);
+                        küsimuseSalvestamine.setText("Küsimus salvestatud");
 
-                        System.out.println("evenhandleri sees");
-                        String knimi = küsimustxt.getText();
-                        grid.add(new Label("Lisa variant  "), 0, (getVastusteArv() + 2));
-                        grid.add(new TextField(), 1, getVastusteArv() + 2);
-                        grid.add(new Label("Antud vastuse eest saab " + (getVastusteArv()+1) + " punkti."), 2, (getVastusteArv() + 2));
-                        setVastusteArv(getVastusteArv() + 1);
                     }
+                }
+            });
+
+            lisaVariant.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    LisaVariant(grid);
                 }
             });
 
             setKüsimusteArv(getKüsimusteArv()+1);
 
 
-            //koguKüsimus[0] = knimi;
 
-
-            //uusAken.setScene(aaaaaaaaaaaaaaaaaaaaaaaaaaa)
         }
+    public void LisaVariant(GridPane grid) {
+
+        Label variant = new Label("Sisesta vastusevariant");
+        TextField varianttxt = new TextField((getVastusteArv()+1)+"punkti andev vastus");
+        grid.add(variant, 0, (getVastusteArv()+5));
+        grid.add(varianttxt, 1, (getVastusteArv()+5));
+        setVastusteArv(getVastusteArv()+1);
+
+        /*küsmuseLisamine.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+                if (ke.getCode() == KeyCode.ENTER && küsimustxt.getText().length() > 0) {
+                    setKüsimus(küsimustxt.getText());
+                    grid.add(lisaVariant, 0, 2);
+                    grid.add(lõpetaVastusteLisamine, 1, 2);
+                }
+            }
+        });*/
+
+
+    }
 
 
     public void esimene() {
@@ -118,11 +156,10 @@ public class LisaTest extends PopUp{
             @Override
             public void handle(KeyEvent ke) {
                 if (ke.getCode() == KeyCode.ENTER && testinimitxt.getText().length() > 0) {
-                    String testinimi = testinimitxt.getText();
                     grid.add(lisaKüsimus, 0, 3);
                     grid.add(lõpetaKüsimusteLisamine, 1, 3);
                     nimeSalvestamine.setText("Testi nimi salvestatud");
-                    setTestiInfo(testinimi);
+                    setTestiInfo(testinimitxt.getText());
                 }
             }
         });
@@ -133,6 +170,7 @@ public class LisaTest extends PopUp{
                 LisaKüsimus();
 
                 //salvesta k[simus arraysse
+                //salvesta viimane vastus
 
             }
         });
