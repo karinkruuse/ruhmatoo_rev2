@@ -1,13 +1,11 @@
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class ValiTest extends PopUp {
@@ -15,12 +13,13 @@ public class ValiTest extends PopUp {
     private static Scanner s = new Scanner(System.in);
     private static Utilities u = new Utilities();
 
-    private String test;
+    private Object test;
     private int pikkus;
     private List<Integer> vastused = new ArrayList<>();
     private VirtualFile testiFail;
 
     public ValiTest(String ribaNimi) {
+
         super(ribaNimi);
 
         VBox testiLayout = new VBox();
@@ -31,32 +30,39 @@ public class ValiTest extends PopUp {
         testiLayout.getChildren().addAll(new Label("Olemas olevad testid:"), listiVaade, kinnita);
         listiVaade.setPrefHeight(26*testideNimed.size());
 
-
         uusAken.setScene(testid);
         uusAken.show();
 
+        PopUp valimine = new PopUp("Kindel?");
+        kinnita.setOnAction(e -> {
+            setTest(listiVaade.getSelectionModel().getSelectedItem());
+            valimine.confirmation("valida testi: '" + test.toString().replace("?","") + "'");
+            System.out.println(valimine.valik);
+            if (valimine.valik == true) {
+                mängi();
+            }
+        });
 
-        while (valik != true) {
-            kinnita.setOnAction(e -> {
-                setTest(listiVaade.getSelectionModel().getSelectedItem().toString());
-                PopUp valimine = new PopUp("Kindel?");
-                valimine.confirmation("valida testi: '" + test + "'");
-            });
-            break;
+
+    }
+
+
+    private void mängi() {
+        try {
+            testiFail = new VirtualFile(test.toString() + ".txt");
+        }
+        catch (FileNotFoundException e) {
+            System.exit(0);
         }
 
-        System.out.println(test);
-
-
-        testiFail = new VirtualFile(test+".txt");
-        pikkus = testiFail.getPikkus();
+        System.out.println(testiFail.getKüsimus(2));
 
     }
 
-    private void setTest(String nimi) {
-        test = nimi.replace("?", "");
-    }
 
+    private void setTest(Object nimi) {
+        test = nimi;
+    }
 
 
     public void küsi(int küsimuseNr) {
@@ -94,6 +100,7 @@ public class ValiTest extends PopUp {
         vastused.add(küsimuseNr-1, punkte);
 
     }
+
 
     public String genereeriTulemus() {
 

@@ -42,7 +42,7 @@ public class VirtualFile {
 
 
     // Kogu fail loetaks erinevatesse listidesse (need listid ongi justkui virtuaalne fail siin koodi sees)
-    public VirtualFile(String textFail) throws Exception {
+    public VirtualFile(String textFail) throws FileNotFoundException {
         File fail = new File(textFail);
         Scanner s = new Scanner(fail);
 
