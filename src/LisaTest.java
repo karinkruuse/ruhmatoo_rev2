@@ -64,25 +64,23 @@ public class LisaTest extends PopUp{
             grid.add(lõpp, 3, 0);
             grid.add(new Label("Uue vastusevariandi sisestamiseks vajuta ENTER"), 0, 1, 3, 4);
 
-
             Scene küsmuseLisamine = new Scene(grid);
             uusAken.setScene(küsmuseLisamine);
-
 
             küsmuseLisamine.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent ke) {
                     if (ke.getCode() == KeyCode.ENTER) {
-                        grid.add(new Label("Lisa variant"), 0, getKüsimusteArv()+2);
-                        grid.add(new TextField, 1, getKüsimusteArv()+2);
-                        setKüsimusteArv(getKüsimusteArv()+1);
 
-                        ke.consume();
+                        grid.add(new Label("Lisa variant"), 0, getKüsimusteArv()+2);
+                        grid.add(new TextField(), 1, getKüsimusteArv()+2);
+                        grid.add(new Label("Antud vastuse eest saab "+ getKüsimusteArv() + " punkti."), 2, getKüsimusteArv()+2);
+                        setKüsimusteArv(getKüsimusteArv()+1);
                     }
                 }
             });
             String knimi = küsimustxt.getText();
-            koguKüsimus[0] = knimi;
+            //koguKüsimus[0] = knimi;
         }
 
         //uusAken.setScene(aaaaaaaaaaaaaaaaaaaaaaaaaaa)
@@ -108,9 +106,6 @@ public class LisaTest extends PopUp{
             public void handle(KeyEvent ke) {
                 if (ke.getCode() == KeyCode.ENTER) {
                     LisaKüsimus();
-                    ke.consume();
-
-
                 }
             }
         });
