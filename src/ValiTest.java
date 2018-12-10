@@ -69,7 +69,6 @@ public class ValiTest extends PopUp {
     private void mängi(Object test) throws FileNotFoundException {
         testiFail = new VirtualFile(test.toString() + ".txt");
         küsi(1);
-
     }
 
 

@@ -52,19 +52,36 @@ public class Tulemus  {
         välimine.getChildren().addAll(palve, layout);
 
         TextField tulemuseKoht = new TextField("Siia sisesta tulemus");
-        TextField minTulemus = new TextField("Tulemuse alampiir");
-        TextField maxTulemus = new TextField("Tulemuse ülempiir");
+        TextField minTulemuseKoht = new TextField("Tulemuse alampiir");
+        TextField maxTulemuseKoht = new TextField("Tulemuse ülempiir");
 
         Button järgmineTulemus = new Button("järgmine");
         Button valmis = new Button("Valmis");
 
-        layout.getChildren().addAll(tulemuseKoht, minTulemus, maxTulemus, järgmineTulemus, valmis);
+        layout.getChildren().addAll(tulemuseKoht, minTulemuseKoht, maxTulemuseKoht, järgmineTulemus, valmis);
         Scene tulemuseLisamiseStseen = new Scene(välimine);
         aken.setScene(tulemuseLisamiseStseen);
 
+        aken.setOnCloseRequest(e -> {
+            e.consume();
+            PopUp p = new PopUp("Kindel?");
+            p.confirmation("Olete kindel, et soovite mängust lahkuda?");
+            if (p.valik == true) {
+                aken.close();
+            }
+        });
+
         järgmineTulemus.setOnAction(e -> {
-            if (tulemuseKoht.getText().length() > 0 && minTulemus.getText().length() > 0 && maxTulemus.getText().length() > 0) {
-                String rida = tulemuseKoht.getText() + ";" + minTulemus.getText() + ";" +  maxTulemus.getText() + "\n";
+            if (tulemuseKoht.getText().length() > 0 && minTulemuseKoht.getText().length() > 0 && maxTulemuseKoht.getText().length() > 0) {
+                if (Integer.parseInt(minTulemuseKoht.getText()) != küsimusteArv) {
+                    Label hoiatus = new Label("Miinimum tulemus peaks olema " + küsimusteArv + ".");
+                    välimine.getChildren().addAll(hoiatus);
+                }
+                else {
+                    String rida = tulemuseKoht.getText() + ";" + minTulemuseKoht.getText() + ";" +  maxTulemuseKoht.getText() + "\n";
+                    tulemused.add(rida);
+                    tulemuseSisestamine();
+                }
             }
             else {
                 Label hoiatus = new Label("Palun täitke kõik väljad!");
@@ -72,6 +89,35 @@ public class Tulemus  {
             }
         });
 
+        valmis.setOnAction(e -> {
+            if (tulemuseKoht.getText().length() > 0 && minTulemuseKoht.getText().length() > 0 && maxTulemuseKoht.getText().length() > 0) {
+                if (Integer.parseInt(maxTulemuseKoht.getText()) == maxTulemus) {
+                    String rida = tulemuseKoht.getText() + ";" + minTulemuseKoht.getText() + ";" +  maxTulemuseKoht.getText() + "\n";
+                    tulemused.add(rida);
+                    lõpp();
+                }
+                else {
+                    Label hoiatus = new Label("Maksimum tulemus peaks olema " + maxTulemus + ".");
+                    välimine.getChildren().addAll(hoiatus);
+                }
+
+            }
+            else {
+                Label hoiatus = new Label("Palun täitke kõik väljad!");
+                välimine.getChildren().addAll(hoiatus);
+            }
+        });
+
+    }
+
+    public void lõpp() {
+        SalvestaFaili salvesta = new SalvestaFaili(küsimused, tulemused);
+        HBox layout = new HBox();
+        Scene lõppuStseen = new Scene(layout);
+        Label label = new Label("Salvestan testi!");
+        Button sulge = new Button("Menüü");
+
+        sulge.setOnAction(e -> aken.close());
     }
 
 }
