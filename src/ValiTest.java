@@ -103,7 +103,6 @@ public class ValiTest extends PopUp {
             p.confirmation("Olete kindel, et soovite mängust lahkuda?");
             if (p.valik == true) {
                 uusAken.close();
-                System.out.println("HAHA");
             }
         });
 
