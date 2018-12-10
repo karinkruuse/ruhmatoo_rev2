@@ -12,20 +12,21 @@ import java.awt.event.KeyListener;
 import java.security.Key;
 import java.util.ArrayList;
 
-public class LisaTest extends PopUp implements KeyListener {
+public class LisaTest extends PopUp{
     //konstruktor, kutsub v;lja esimese stseeni
     public LisaTest(String ribaNimi) {
         super(ribaNimi);
         esimene();
     }
 
-    public void keyTyped(){
-
+    //ma ei tea kas see t;;tab aga vist t;;tab
+    private int küsimusteArv = 0;
+    public int getKüsimusteArv() {
+        return küsimusteArv;
     }
-
-    //ma ei tea kas see t;;tab
-    private
-
+    public void setKüsimusteArv(int küsimusteArv) {
+        this.küsimusteArv = küsimusteArv;
+    }
 
     // kusimuste lisamise lopetamiseks
     private static boolean kloop = true;
@@ -50,9 +51,10 @@ public class LisaTest extends PopUp implements KeyListener {
     public void LisaKüsimus() {
         while (kloop) {
 
+            setKüsimusteArv(0);
+
             GridPane grid = new GridPane();
             String[] koguKüsimus;
-            int vastusteArv = 0;
             Label küsimus = new Label("Sisesta küsimus");
             TextField küsimustxt = new TextField();
             Button lõpp = new Button("Lõpeta küsimuste lisamine");
@@ -62,27 +64,23 @@ public class LisaTest extends PopUp implements KeyListener {
             grid.add(lõpp, 3, 0);
             grid.add(new Label("Uue vastusevariandi sisestamiseks vajuta ENTER"), 0, 1, 3, 4);
 
-
             Scene küsmuseLisamine = new Scene(grid);
             uusAken.setScene(küsmuseLisamine);
-
 
             küsmuseLisamine.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent ke) {
                     if (ke.getCode() == KeyCode.ENTER) {
-                        grid.add(new Label("Lisa variant"), 0, vastusteArv+2);
-                        grid.add(new TextField, 1, vastusteArv+2);
-                        vastusteArv = vastusteArv+1;
 
-
-
-                        ke.consume();
+                        grid.add(new Label("Lisa variant"), 0, getKüsimusteArv()+2);
+                        grid.add(new TextField(), 1, getKüsimusteArv()+2);
+                        grid.add(new Label("Antud vastuse eest saab "+ getKüsimusteArv() + " punkti."), 2, getKüsimusteArv()+2);
+                        setKüsimusteArv(getKüsimusteArv()+1);
                     }
                 }
             });
             String knimi = küsimustxt.getText();
-            koguKüsimus[0] = knimi;
+            //koguKüsimus[0] = knimi;
         }
 
         //uusAken.setScene(aaaaaaaaaaaaaaaaaaaaaaaaaaa)
@@ -108,9 +106,6 @@ public class LisaTest extends PopUp implements KeyListener {
             public void handle(KeyEvent ke) {
                 if (ke.getCode() == KeyCode.ENTER) {
                     LisaKüsimus();
-                    ke.consume();
-
-
                 }
             }
         });
