@@ -1,21 +1,26 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SalvestaFaili {
 
-    public SalvestaFaili(ArrayList<String> tekst) {
+    public SalvestaFaili(ArrayList<String> küsimused, ArrayList<String> tulemused) {
 
         String failiPath = "resources" + File.separatorChar + "testid" + File.separatorChar;
         try (BufferedWriter output = new BufferedWriter(new FileWriter(failiPath + "nimed.txt", true))){
-            output.write(tekst.get(0));
+            output.write(küsimused.get(0));
         }
         catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        try (BufferedWriter output = new BufferedWriter(new FileWriter(failiPath + tekst.get(0) + ".txt", true))) {
-            for (int i = 1; i < tekst.size(); i++) {
-                output.write(tekst.get(i));
+        try (BufferedWriter output = new BufferedWriter(new FileWriter(failiPath + küsimused.get(0) + ".txt", true))) {
+            for (int i = 1; i < küsimused.size(); i++) {
+                output.write(küsimused.get(i));
+            }
+            output.write("\n");
+            for (int i = 0; i < tulemused.size(); i++) {
+                output.write(tulemused.get(i));
             }
         }
         catch (IOException e) {

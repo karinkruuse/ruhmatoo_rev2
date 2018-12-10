@@ -138,6 +138,8 @@ public class ValiTest extends PopUp {
         vbox.getChildren().addAll(tt);
         vbox.setAlignment(Pos.CENTER);
         uusAken.setScene(tulemuseStseen);
+
+
     }
 
 
