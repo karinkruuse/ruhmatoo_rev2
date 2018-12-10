@@ -16,11 +16,6 @@ import java.io.FileOutputStream;
 import java.util.*;
 
 public class ValiTest extends PopUp {
-
-    private static Scanner s = new Scanner(System.in);
-
-    private int pikkus;
-    private int tulemus;
     private List<Integer> vastused = new ArrayList<>();
     private VirtualFile testiFail;
 
@@ -72,10 +67,7 @@ public class ValiTest extends PopUp {
 
 
     private void mängi(Object test) throws FileNotFoundException {
-
         testiFail = new VirtualFile(test.toString() + ".txt");
-        pikkus = testiFail.getPikkus();
-
         küsi(1);
 
     }
@@ -85,6 +77,8 @@ public class ValiTest extends PopUp {
         // Küsimuse ja vastusevariantide väljastamine
         String[] küsimus = testiFail.getKüsimus(küsimuseNr);
 
+
+        // See on vastusevariantide segamiseks mõeldud osa
         List<String> list = new ArrayList<>(Arrays.asList(küsimus));  // küsimuste list
         list.remove(küsimus[0]);  // esimene on küsimus
         String[] segatud = list.toArray(new String[0]);  // see on segamiseks list
@@ -104,7 +98,7 @@ public class ValiTest extends PopUp {
         testiLayout.setBackground(new Background(bgi));
         uusAken.setScene(küsimuseStseen);
 
-        // See on naq rekursiivne küsimuste küsimine ja kui enam pole küsimust, mida küsida, siis genereeritakse tulemus, mis hetkel kuvatakse terminalis
+        // See on naq rekursiivne küsimuste küsimine ja kui enam pole küsimust, mida küsida, siis tuleb tulemus
         kinnita.setOnAction(e -> {
             setVastus(küsimuseNr, küsimus, segatudList, listiVaade.getSelectionModel().getSelectedItem());
             try {
@@ -114,23 +108,24 @@ public class ValiTest extends PopUp {
                 tulemus(genereeriTulemus());
             }
         });
-
     }
 
 
     public void tulemus(String t) {
         VBox vbox = new VBox();
+        Scene tulemuseStseen = new Scene(vbox, laius, kõrgus);
+
         bgi = new BackgroundImage(new Image("pildid" + File.separatorChar + "grupp.jpeg"),
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
 
-        Scene tulemuseStseen = new Scene(vbox, laius, kõrgus);
         Label tt = new Label(t);
         tt.setScaleX(5);
         tt.setScaleY(5);
         tt.setTextFill(Color.WHITE);
+
         vbox.setBackground(new Background(bgi));
         vbox.getChildren().addAll(tt);
         vbox.setAlignment(Pos.CENTER);
@@ -153,7 +148,6 @@ public class ValiTest extends PopUp {
             summa += e;
         }
 
-
         for (int i = 0; i < testiFail.getTulemusteArv(); i++) {
             if (summa >= testiFail.getVahemikAlampiir(i) && summa <= testiFail.getVahemikÜlempiir(i)) {
                 return testiFail.getTulemus(i);
@@ -162,7 +156,5 @@ public class ValiTest extends PopUp {
         return "";
 
     }
-
-
 
 }
