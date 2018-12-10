@@ -98,6 +98,8 @@ public class ValiTest extends PopUp {
         testiLayout.setBackground(new Background(bgi));
         uusAken.setScene(küsimuseStseen);
 
+
+
         // See on naq rekursiivne küsimuste küsimine ja kui enam pole küsimust, mida küsida, siis tuleb tulemus
         kinnita.setOnAction(e -> {
             setVastus(küsimuseNr, küsimus, segatudList, listiVaade.getSelectionModel().getSelectedItem());
@@ -156,5 +158,7 @@ public class ValiTest extends PopUp {
         return "";
 
     }
+
+
 
 }
