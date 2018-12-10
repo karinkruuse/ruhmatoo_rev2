@@ -43,7 +43,7 @@ public class VirtualFile {
 
     // Kogu fail loetaks erinevatesse listidesse (need listid ongi justkui virtuaalne fail siin koodi sees)
     public VirtualFile(String textFail) throws FileNotFoundException {
-        File fail = new File(textFail);
+        File fail = new File("resources" + File.separatorChar + "testid" + File.separatorChar + textFail);
         Scanner s = new Scanner(fail);
 
         // küsimused
@@ -51,7 +51,9 @@ public class VirtualFile {
         int i = 0;
         while (s.hasNextLine()) {
             rida = s.nextLine().trim();
-            if (rida.isEmpty()) { break; }
+            if (rida.isEmpty()) {
+                break;
+            }
             küsimused.add(i, rida.split(";"));
             i++;
         }
@@ -74,11 +76,6 @@ public class VirtualFile {
         return küsimused.get(küsimuseNr-1);
     }
 
-
-    public String suvalineTulemus() {
-        int r = (int)Math.floor((Math.random() * tulemusteArv));
-        return tulemused.get(r);
-    }
 
 
     public String getTulemus(int index) {

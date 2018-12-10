@@ -1,0 +1,6 @@
+Mis on su lemmikvärv?;pruun;kollane;lilla
+Kas sulle meeldib rohkem kassi- või koeratoit?;kassitoit;koertoit
+Kas oled kõigiga sõbralik?;ei;jah
+
+Kass;3;4
+Koer;5;7

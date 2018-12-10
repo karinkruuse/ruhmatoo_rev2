@@ -1,3 +1,4 @@
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,10 +12,9 @@ import java.util.*;
 public class ValiTest extends PopUp {
 
     private static Scanner s = new Scanner(System.in);
-    private static Utilities u = new Utilities();
 
-    private Object test;
     private int pikkus;
+    private int tulemus;
     private List<Integer> vastused = new ArrayList<>();
     private VirtualFile testiFail;
 
@@ -33,72 +33,65 @@ public class ValiTest extends PopUp {
         uusAken.setScene(testid);
         uusAken.show();
 
-        PopUp valimine = new PopUp("Kindel?");
         kinnita.setOnAction(e -> {
-            setTest(listiVaade.getSelectionModel().getSelectedItem());
-            valimine.confirmation("valida testi: '" + test.toString().replace("?","") + "'");
-            System.out.println(valimine.valik);
-            if (valimine.valik == true) {
-                mängi();
+            try {
+                mängi(listiVaade.getSelectionModel().getSelectedItem());
+            }
+            catch (FileNotFoundException f) {
+                listiVaade.getItems().remove(listiVaade.getSelectionModel().getSelectedItem());
             }
         });
-
-
     }
 
+    private void mängi(Object test) throws FileNotFoundException {
 
-    private void mängi() {
-        try {
-            testiFail = new VirtualFile(test.toString() + ".txt");
-        }
-        catch (FileNotFoundException e) {
-            System.exit(0);
-        }
+        testiFail = new VirtualFile(test.toString() + ".txt");
+        pikkus = testiFail.getPikkus();
 
-        System.out.println(testiFail.getKüsimus(2));
+
+        küsi(1);
 
     }
-
-
-    private void setTest(Object nimi) {
-        test = nimi;
-    }
-
 
     public void küsi(int küsimuseNr) {
-
         // Küsimuse ja vastusevariantide väljastamine
         String[] küsimus = testiFail.getKüsimus(küsimuseNr);
-        System.out.println(küsimus[0]);
-
 
         List<String> list = new ArrayList<>(Arrays.asList(küsimus));  // küsimuste list
         list.remove(küsimus[0]);  // esimene on küsimus
         String[] segatud = list.toArray(new String[0]);  // see on segamiseks list
-        segatud = u.shuffle(segatud);  // siin toimbu päriselt segamine
+        segatud = Utilities.shuffle(segatud);  // siin toimub päriselt segamine
+        List<String> segatudList = new ArrayList<>(Arrays.asList(segatud));
+
+        VBox testiLayout = new VBox();
+        Scene küsimuseStseen = new Scene(testiLayout);
+        ObservableList<String> vastused = FXCollections.observableList(segatudList);
+        ListView listiVaade = new ListView(vastused);
+        Button kinnita = new Button("Vasta");
+        testiLayout.getChildren().addAll(new Label(küsimus[0]), listiVaade, kinnita);
+        listiVaade.setPrefHeight(26*vastused.size());
+
+        uusAken.setScene(küsimuseStseen);
 
 
-        for (int i = 0; i < segatud.length; i++) {  // segatud list pinditakse
-            System.out.println("[" + (i+1) + "] " + segatud[i]);
-        }
-
-        // user input
-        int vastus = 0;
-        while (true) {
+        // See on naq rekursiivne küsimuste küsimine ja kui enam pole küsimust, mida küsida, siis genereeritakse tulemus, mis hetkel kuvatakse terminalis
+        kinnita.setOnAction(e -> {
+            setVastus(küsimuseNr, küsimus, segatudList, listiVaade.getSelectionModel().getSelectedItem());
             try {
-                vastus = Integer.parseInt(s.nextLine());
-                break;
+                küsi(küsimuseNr+1);
             }
-            catch (NumberFormatException e) {
-                System.out.println("Palun sisestage vastusevariandi number!");
+            catch (IndexOutOfBoundsException e2) {
+                System.out.println(genereeriTulemus());
+                uusAken.close();
             }
-        }
+        });
 
-        int punkte = Arrays.asList(küsimus).indexOf(segatud[vastus-1]);
-        // leitakse antud variandi asukohe algses listis ja seellest tuleneb saadav punktide arv
+    }
 
+    public void setVastus(int küsimuseNr, String[] segamata, List segatud, Object valitudVastus) {
+        int vastus = segatud.indexOf(valitudVastus.toString());
+        int punkte = Arrays.asList(segamata).indexOf(segatud.get(vastus));
         vastused.add(küsimuseNr-1, punkte);
-
     }
 
 

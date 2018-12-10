@@ -17,12 +17,10 @@ public class PopUp {
         uusAken.resizableProperty();
     }
 
-    // Seda booleani tuleb alamklassis kontrollida, sest confirmation ei returni midagi
-    boolean valik = false;
-    public void confirmation(String tegevus) {
+    public void confirmation() {
         Button jah = new Button("Jah");
         Button ei = new Button("Ei");
-        Label tekst = new Label("Kas olete kindel, et soovite " + tegevus + "?");
+        Label tekst = new Label("Kas olete kindel, et soovite mängu sulgeda?");
 
         VBox layout = new VBox(10, tekst, ei, jah);
         layout.setAlignment(Pos.CENTER);
@@ -35,19 +33,12 @@ public class PopUp {
         // Kui saaks siin oodata enne, kui selle kutsunud meetod saa jätkata, ss imo see lahendaks palju probleeme
 
         jah.setOnAction(event -> {
-            setValik(true);
             uusAken.close();
         });
         ei.setOnAction(event -> {
-            setValik(false);
             uusAken.close();
         });
     }
-
-    private void setValik(boolean väärtus) {
-        valik = väärtus;
-    }
-
 
 
 }
