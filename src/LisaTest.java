@@ -17,23 +17,22 @@ public class LisaTest extends PopUp{
     }
 
     private int küsimusteArv = 0;
+    private StringBuilder koguKüsimus = new StringBuilder();
+    private int vastusteArv = 0;
+    private ArrayList<String> testiInfo = new ArrayList();
+
     public int getKüsimusteArv() {
         return küsimusteArv;
     }
     public void setKüsimusteArv(int küsimusteArv) {
         this.küsimusteArv = küsimusteArv;
     }
-
-    private int vastusteArv = 0;
     public int getVastusteArv() {
         return vastusteArv;
     }
     public void setVastusteArv(int vastusteArv) {
         this.vastusteArv = vastusteArv;
     }
-
-    StringBuilder koguKüsimus = new StringBuilder();
-
     public StringBuilder getKoguKüsimus() {
         return koguKüsimus;
     }
@@ -42,14 +41,12 @@ public class LisaTest extends PopUp{
     }
 
     //kogu testiinfo, mille korraga faili saab salvestada
-    private ArrayList<String> testiInfo = new ArrayList();
     public ArrayList getTestiInfo() {
         return testiInfo;
     }
     public void setTestiInfo(String info) {
         this.testiInfo.add(info);
     }
-
     public void setTestiInfo(ArrayList testiInfo) {
         this.testiInfo = testiInfo;
     }
@@ -67,7 +64,7 @@ public class LisaTest extends PopUp{
             grid.add(küsimustxt, 1, 0);
             Label küsimuseSalvestamine = new Label("Variantide lisamiseks vajuta ENTER");
             grid.add(küsimuseSalvestamine, 0, 1, 6, 1);
-            Scene küsmuseLisamine = new Scene(grid);
+            Scene küsmuseLisamine = new Scene(grid, 640, 800);
 
             Button lisaKüsimus = new Button("Lõpeta vastuste lisamine ja lisa uus küsimus");
             Button lisaTulemus = new Button("Alusta testi tulemuste lisamist");
@@ -127,7 +124,7 @@ public class LisaTest extends PopUp{
         GridPane grid = new GridPane();
         Label testiSilt = new Label("Sisesta testi nimi:  ");
         TextField testinimitxt = new TextField();
-        Scene algus = new Scene(grid);
+        Scene algus = new Scene(grid, 640, 425);
         System.out.println("olen esimeses meetodis");
         grid.add(testiSilt, 0, 0);
         grid.add(testinimitxt, 1, 0);
@@ -135,6 +132,15 @@ public class LisaTest extends PopUp{
         grid.add(nimeSalvestamine, 0, 1, 3, 1);
         uusAken.setScene(algus);
         uusAken.show();
+
+        uusAken.setOnCloseRequest(e -> {
+            e.consume();
+            PopUp p = new PopUp("Kindel?");
+            p.confirmation("Olete kindel, et soovite mängust lahkuda?");
+            if (p.valik == true) {
+                uusAken.close();
+            }
+        });
 
         algus.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
