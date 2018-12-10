@@ -89,6 +89,7 @@ public class LisaTest extends PopUp{
             lisaKüsimus.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
+                    setKüsimusteArv(getKüsimusteArv()+1);
                     setTestiInfo(getKoguKüsimus().toString());
                     lisaKüsimus();
                 }
