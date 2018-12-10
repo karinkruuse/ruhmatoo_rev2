@@ -47,8 +47,10 @@ public class Tulemus  {
     public void tulemuseSisestamine() {
         VBox välimine = new VBox();
         HBox layout = new HBox();
-        välimine.getChildren().add(layout);
         layout.setAlignment(Pos.BASELINE_RIGHT);
+        Label palve = new Label("Palun alustage tulemusest, milleks on vaja kõige vähem punkte.");
+        välimine.getChildren().addAll(palve, layout);
+
         TextField tulemuseKoht = new TextField("Siia sisesta tulemus");
         TextField minTulemus = new TextField("Tulemuse alampiir");
         TextField maxTulemus = new TextField("Tulemuse ülempiir");
