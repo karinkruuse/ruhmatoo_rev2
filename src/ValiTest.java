@@ -4,9 +4,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.*;
 
 public class ValiTest extends PopUp {
@@ -29,6 +32,7 @@ public class ValiTest extends PopUp {
         Button kinnita = new Button("Vali");
         testiLayout.getChildren().addAll(new Label("Olemas olevad testid:"), listiVaade, kinnita);
         listiVaade.setPrefHeight(26*testideNimed.size());
+
 
         uusAken.setScene(testid);
         uusAken.show();

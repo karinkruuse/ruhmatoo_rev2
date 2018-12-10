@@ -2,8 +2,11 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class Main extends Application {
 
@@ -20,7 +23,16 @@ public class Main extends Application {
         HBox layout = new HBox(10, valiTest, lisaTest);
         layout.setAlignment(Pos.CENTER);
 
-        Scene peaStseen = new Scene(layout, 200, 100);
+        Scene peaStseen = new Scene(layout, 500, 500);
+
+
+        BackgroundImage bgi = new BackgroundImage(new Image("pildid" + File.separatorChar + "taust.jpeg"),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+
+        layout.setBackground(new Background(bgi));
 
         aken.setScene(peaStseen);
         aken.show();
