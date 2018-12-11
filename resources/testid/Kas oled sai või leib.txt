@@ -1,0 +1,5 @@
+Kas sul on hele nahk?;hele kui lumi;selline keskmine;leivapruun
+Kas sul on pehme nahk?;jeez Louise;seest on pehmem;Miks küsid?
+
+Sai;3;4
+Leib;5;6
