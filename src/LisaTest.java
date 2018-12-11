@@ -25,6 +25,7 @@ public class LisaTest extends PopUp{
     private String küsimus;
     private StringBuilder vastused = new StringBuilder();
 
+//getters & setters
     public String getTestiPealkiri() {
         return testiPealkiri;
     }
@@ -81,10 +82,11 @@ public class LisaTest extends PopUp{
 
 
 
+    //küsimuste lisamise meetod ja stseen
     public void lisaKüsimus() {
             setVastusteArv(0); //uue lisamisel vastuste arv 0
-            getKoguKüsimus().setLength(0);
-            getVastused().setLength(0);
+            getKoguKüsimus().setLength(0); //pmst tühjendab koguKüsimuse StringBuilderi, et siia saaks uue küsimuse ja selle vastused panna
+            getVastused().setLength(0); //tühjendab vastuste StringBuilderi
 
             GridPane grid = new GridPane();
             Label küsimuseSilt = new Label("Sisesta küsimus nr " + (getKüsimusteArv()+1) + "     ");
@@ -101,6 +103,7 @@ public class LisaTest extends PopUp{
             grid.add(lisaTulemus, 1, 2);
             uusAken.setScene(küsmuseLisamine);
 
+            //ENTERi vajutamisel saab kutsutakse variantide lisamiseks mooetod
             küsmuseLisamine.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent ke) {
@@ -119,8 +122,10 @@ public class LisaTest extends PopUp{
                     setKoguKüsimus(getKoguKüsimus().append(getKüsimus()+";"+getVastused()));
                     setTestiInfo(getKoguKüsimus().toString());
                     lisaKüsimus();
+                    //nupu vajutamisel kutsutakse uuesti küsimise lisamise meetod
                 }
             });
+
 
             lisaTulemus.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -128,11 +133,12 @@ public class LisaTest extends PopUp{
                     setKoguKüsimus(getKoguKüsimus().append(getKüsimus()+";"+getVastused()));
                     setTestiInfo(getKoguKüsimus().toString());
                     Tulemus tulemus = new Tulemus(uusAken, getTestiInfo());
+                    //nupu vajutamisel saab hakata tulemusi lisama
                 }
             });
         }
 
-    public void lisaVariant(GridPane grid) {
+    public void lisaVariant(GridPane grid) { //sama stseen, mis lisaKüsimusel
 
         Label variant = new Label("Sisesta "+(getVastusteArv()+1)+" punkti andev vastus");
         TextField varianttxt = new TextField();
@@ -151,7 +157,7 @@ public class LisaTest extends PopUp{
     }
 
 
-    public void lisaTest() {
+    public void lisaTest() { //esimene stseen, testi pealkirja salvestamine
         GridPane grid = new GridPane();
         Label testiSilt = new Label("Sisesta testi nimi:  ");
         TextField testinimitxt = new TextField();
@@ -163,7 +169,7 @@ public class LisaTest extends PopUp{
         uusAken.setScene(algus);
         uusAken.show();
 
-        uusAken.setOnCloseRequest(e -> {
+        uusAken.setOnCloseRequest(e -> { //akna sulgemise katsel küsitakse, kas soovitakse mängust lahkuda
             e.consume();
             PopUp p = new PopUp("Kindel?");
             p.confirmation("Olete kindel, et soovite mängust lahkuda?");
@@ -171,9 +177,8 @@ public class LisaTest extends PopUp{
                 uusAken.close();
             }
         });
-
+///ENTERi vajutamisel salvestab testi pealkirja ja kutsub välja küsimuste lisamise meetodi
         algus.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-            @Override
             public void handle(KeyEvent ke) {
                 if (ke.getCode() == KeyCode.ENTER && testinimitxt.getText().length() > 0) {
                     setTestiPealkiri(testinimitxt.getText());
