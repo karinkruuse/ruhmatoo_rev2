@@ -109,6 +109,7 @@ public class ValiTest extends PopUp {
         });
 
         // See on naq rekursiivne küsimuste küsimine ja kui enam pole küsimust, mida küsida, siis tuleb tulemus
+        // Kui sellise numbriga küsimust enam ei ole, siis tuleb meetodi alguses error kohe
         kinnita.setOnAction(e -> {
             setVastus(küsimuseNr, küsimus, segatudList, listiVaade.getSelectionModel().getSelectedItem());
             try {
