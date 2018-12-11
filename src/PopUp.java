@@ -10,6 +10,7 @@ public class PopUp {
 
     protected Stage uusAken;
 
+    // Uue akna avamiseks
     public PopUp(String ribaNimi) {
         uusAken = new Stage();
         uusAken.initModality(Modality.APPLICATION_MODAL);
@@ -20,6 +21,7 @@ public class PopUp {
     // Seda booleani tuleb kontrollida, et seda saada, mis user vastas
     // töötava näide on ValiTest klassis konstruktoris
     public boolean valik = false;
+    // See sätib uue akna nii, et oleks võimalik mingile küsimuseks kasutajalt kinnitust saada
     public void confirmation(String tekst) {
         Button jah = new Button("Jah");
         Button ei = new Button("Ei");
@@ -44,6 +46,6 @@ public class PopUp {
 
     public void setValik() {
         valik = true;
-    }
+    }  // See on vajalik, sest mitte staatilise muutuja väärtust ei saa hästi lambdaga muuta
 
 }

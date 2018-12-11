@@ -24,6 +24,7 @@ public class ValiTest extends PopUp {
     private int kõrgus;
 
     public ValiTest(String ribaNimi) {
+        // PopUp loob uue akna
         super(ribaNimi);
 
         bgi = new BackgroundImage(new Image("pildid" + File.separatorChar + "naine.jpeg"),
@@ -48,6 +49,7 @@ public class ValiTest extends PopUp {
 
         uusAken.setScene(testid);
         uusAken.show();
+
 
         kinnita.setOnAction(e -> {
             PopUp kindel = new PopUp("");
@@ -96,6 +98,7 @@ public class ValiTest extends PopUp {
         testiLayout.setBackground(new Background(bgi));
         uusAken.setScene(küsimuseStseen);
 
+        // taoline popUp on mitmetes kohtades, see on selleks, et kasutaja kogemata kinni ei paneks akent
         uusAken.setOnCloseRequest(e -> {
             e.consume();
             PopUp p = new PopUp("Kindel?");
@@ -106,6 +109,7 @@ public class ValiTest extends PopUp {
         });
 
         // See on naq rekursiivne küsimuste küsimine ja kui enam pole küsimust, mida küsida, siis tuleb tulemus
+        // Kui sellise numbriga küsimust enam ei ole, siis tuleb meetodi alguses error kohe
         kinnita.setOnAction(e -> {
             setVastus(küsimuseNr, küsimus, segatudList, listiVaade.getSelectionModel().getSelectedItem());
             try {
