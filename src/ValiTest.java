@@ -98,6 +98,7 @@ public class ValiTest extends PopUp {
         testiLayout.setBackground(new Background(bgi));
         uusAken.setScene(küsimuseStseen);
 
+        // taoline popUp on mitmetes kohtades, see on selleks, et kasutaja kogemata kinni ei paneks akent
         uusAken.setOnCloseRequest(e -> {
             e.consume();
             PopUp p = new PopUp("Kindel?");
