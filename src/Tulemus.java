@@ -20,7 +20,7 @@ public class Tulemus  {
 
     public Tulemus(Stage aken, ArrayList<String> küsimused) {
         this.aken = aken;
-        küsimusteArv = küsimused.size()-1;
+        küsimusteArv = küsimused.size()-2;
         int summa = 0;
         for (String s : küsimused) {
             summa += s.split(";").length - 1;

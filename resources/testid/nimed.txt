@@ -1,2 +1,6 @@
 Kas oled kass või koer
 Kas oled sai või leib
+
+nimi
+nimi2
+nimi3

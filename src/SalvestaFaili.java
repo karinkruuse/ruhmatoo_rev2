@@ -15,7 +15,7 @@ public class SalvestaFaili {
         }
 
         try (BufferedWriter output = new BufferedWriter(new FileWriter(failiPath + küsimused.get(0) + ".txt", true))) {
-            for (int i = 0; i < küsimused.size(); i++) {
+            for (int i = 2; i < küsimused.size(); i++) {
                 output.write(küsimused.get(i) + "\n");
             }
             output.write("\n");
