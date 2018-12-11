@@ -85,6 +85,8 @@ public class ValiTest extends PopUp {
         segatud = Utilities.shuffle(segatud);  // siin toimub päriselt segamine
         List<String> segatudList = new ArrayList<>(Arrays.asList(segatud));
 
+
+        // Visuaalne osa
         VBox testiLayout = new VBox();
         Scene küsimuseStseen = new Scene(testiLayout, laius, kõrgus);
         ObservableList<String> vastused = FXCollections.observableList(segatudList);

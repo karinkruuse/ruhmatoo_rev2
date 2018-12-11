@@ -10,7 +10,7 @@ public class SalvestaFaili {
 
         // Nimi salvestatakse nimede faili
         try (BufferedWriter output = new BufferedWriter(new FileWriter(failiPath + "nimed.txt", true))){
-            output.write(küsimused.get(0).replace("?", "") + "\n");
+            output.write(  "\n" + küsimused.get(0).replace("?", ""));
         }
         catch (IOException e) {
             throw new RuntimeException(e);
