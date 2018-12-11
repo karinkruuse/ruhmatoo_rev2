@@ -24,6 +24,7 @@ public class ValiTest extends PopUp {
     private int kõrgus;
 
     public ValiTest(String ribaNimi) {
+        // PopUp loob uue akna
         super(ribaNimi);
 
         bgi = new BackgroundImage(new Image("pildid" + File.separatorChar + "naine.jpeg"),
@@ -48,6 +49,7 @@ public class ValiTest extends PopUp {
 
         uusAken.setScene(testid);
         uusAken.show();
+
 
         kinnita.setOnAction(e -> {
             PopUp kindel = new PopUp("");

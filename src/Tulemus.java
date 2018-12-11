@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.ArrayList;
 
+
+// Siin klassis kutsutakse meetodid
 public class Tulemus  {
 
     Stage aken;
@@ -32,6 +34,7 @@ public class Tulemus  {
         tulemusteAlgus();
     }
 
+
     public void tulemusteAlgus() {
         Label küsimus = new Label("Testis on võimalik saada " + küsimusteArv + " kuni " + maxTulemus + " punkti.");
         VBox vbox = new VBox();
@@ -45,6 +48,7 @@ public class Tulemus  {
         alusta.setOnAction(e -> tulemuseSisestamine());
 
     }
+
 
     public void tulemuseSisestamine() {
 
@@ -119,6 +123,7 @@ public class Tulemus  {
         });
 
     }
+
 
     public void lõpp() {
 
