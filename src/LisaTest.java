@@ -21,6 +21,34 @@ public class LisaTest extends PopUp{
     private int vastusteArv = 0;
     private ArrayList<String> testiInfo = new ArrayList();
 
+    private String testiPealkiri;
+    private String küsimus;
+    private StringBuilder vastused = new StringBuilder();
+
+    public String getTestiPealkiri() {
+        return testiPealkiri;
+    }
+
+    public void setTestiPealkiri(String testiPealkiri) {
+        this.testiPealkiri = testiPealkiri;
+    }
+
+    public String getKüsimus() {
+        return küsimus;
+    }
+
+    public void setKüsimus(String küsimus) {
+        this.küsimus = küsimus;
+    }
+
+    public StringBuilder getVastused() {
+        return vastused;
+    }
+
+    public void setVastused(StringBuilder vastused) {
+        this.vastused = vastused;
+    }
+
     public int getKüsimusteArv() {
         return küsimusteArv;
     }
@@ -56,6 +84,7 @@ public class LisaTest extends PopUp{
     public void lisaKüsimus() {
             setVastusteArv(0); //uue lisamisel vastuste arv 0
             getKoguKüsimus().setLength(0);
+            getVastused().setLength(0);
 
             GridPane grid = new GridPane();
             Label küsimuseSilt = new Label("Sisesta küsimus nr " + (getKüsimusteArv()+1) + "     ");
@@ -76,7 +105,7 @@ public class LisaTest extends PopUp{
                 @Override
                 public void handle(KeyEvent ke) {
                     if (ke.getCode() == KeyCode.ENTER && küsimustxt.getText().length() > 0) {
-                        setKoguKüsimus(getKoguKüsimus().append(küsimustxt.getText()));
+                        setKüsimus(küsimustxt.getText());
                         küsimuseSalvestamine.setText("");
                         lisaVariant(grid);
                     }
@@ -87,6 +116,7 @@ public class LisaTest extends PopUp{
                 @Override
                 public void handle(ActionEvent event) {
                     setKüsimusteArv(getKüsimusteArv()+1);
+                    setKoguKüsimus(getKoguKüsimus().append(getKüsimus()+";"+getVastused()));
                     setTestiInfo(getKoguKüsimus().toString());
                     lisaKüsimus();
                 }
@@ -95,6 +125,7 @@ public class LisaTest extends PopUp{
             lisaTulemus.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
+                    setKoguKüsimus(getKoguKüsimus().append(getKüsimus()+";"+getVastused()));
                     setTestiInfo(getKoguKüsimus().toString());
                     Tulemus tulemus = new Tulemus(uusAken, getTestiInfo());
                 }
@@ -112,7 +143,7 @@ public class LisaTest extends PopUp{
         salvesta.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                setKoguKüsimus((getKoguKüsimus().append(";"+varianttxt.getText())));
+                setVastused(getVastused().append(varianttxt.getText()+";"));
                 setVastusteArv(getVastusteArv()+1);
                 lisaVariant(grid);
             }
@@ -125,7 +156,6 @@ public class LisaTest extends PopUp{
         Label testiSilt = new Label("Sisesta testi nimi:  ");
         TextField testinimitxt = new TextField();
         Scene algus = new Scene(grid, 640, 425);
-        System.out.println("olen esimeses meetodis");
         grid.add(testiSilt, 0, 0);
         grid.add(testinimitxt, 1, 0);
         Label nimeSalvestamine = new Label("Nime salvestamiseks ja küsimuste lisamiseks vajuta ENTER");
@@ -146,10 +176,12 @@ public class LisaTest extends PopUp{
             @Override
             public void handle(KeyEvent ke) {
                 if (ke.getCode() == KeyCode.ENTER && testinimitxt.getText().length() > 0) {
-                    setTestiInfo(testinimitxt.getText());
+                    setTestiPealkiri(testinimitxt.getText());
+                    setTestiInfo(getTestiPealkiri());
                     lisaKüsimus();
                 }
             }
         });
     }
+
 }
